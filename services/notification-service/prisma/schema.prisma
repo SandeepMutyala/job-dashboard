@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum notification_type {
+  application_status
+  new_job
+}
+
+model notification {
+  id          Int               @id @default(autoincrement())
+  user_id     Int
+  type        notification_type
+  message     String?
+  is_read     Boolean           @default(false)
+  created_at  DateTime          @default(now())
+}

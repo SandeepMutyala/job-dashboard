@@ -15,5 +15,68 @@ services:
       - pgdata:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
 
+  auth-service:
+    build: ./services/auth-service
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./services/auth-service/.env
+    depends_on:
+      - db
+
+  user-service:
+    build: ./services/user-service
+    ports:
+      - "4001:4001"
+    env_file:
+      - ./services/user-service/.env
+    depends_on:
+      - db
+
+  company-service:
+    build: ./services/company-service
+    ports:
+      - "4002:4002"
+    env_file:
+      - ./services/company-service/.env
+    depends_on:
+      - db
+
+  job-service:
+    build: ./services/job-service
+    ports:
+      - "4003:4003"
+    env_file:
+      - ./services/job-service/.env
+    depends_on:
+      - db
+
+  application-service:
+    build: ./services/application-service
+    ports:
+      - "4004:4004"
+    env_file:
+      - ./services/application-service/.env
+    depends_on:
+      - db
+
+  notification-service:
+    build: ./services/notification-service
+    ports:
+      - "4005:4005"
+    env_file:
+      - ./services/notification-service/.env
+    depends_on:
+      - db
+
+  ai-service:
+    build: ./services/ai-assistant-service
+    ports:
+      - "4006:4006"
+    env_file:
+      - ./services/ai-assistant-service/.env
+    depends_on:
+      - db
+
 volumes:
   pgdata:
