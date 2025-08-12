@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user_profile {
+  id           Int       @id @default(autoincrement())
+  user_id      Int       @unique
+  full_name    String?
+  phone        String?
+  location     String?
+  preferences  String?
+
+  resumes      resume[]  @relation("UserProfileResumes")
+}
+
+model resume {
+  id           Int          @id @default(autoincrement())
+  user_id      Int
+  resume_url   String
+  title        String?
+  uploaded_at  DateTime     @default(now())
+
+  user_profile user_profile @relation("UserProfileResumes", fields: [user_id], references: [user_id])
+}
