@@ -1,6 +1,17 @@
 version: "3.8"
 
 services:
+  frontend:
+    build: ./job-dashboard-client
+    container_name: job-dashboard-frontend
+    ports:
+      - "3000:80"  
+    depends_on:
+      - auth-service
+      - user-service
+      - db
+      - redis
+
   db:
     image: postgres:15
     container_name: postgres
@@ -15,6 +26,17 @@ services:
       - pgdata:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
 
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    # Do NOT expose port for dev internal use only
+    # ports:
+    #   - "6379:6379"
+
   auth-service:
     build: ./services/auth-service
     ports:
@@ -23,6 +45,7 @@ services:
       - ./services/auth-service/.env
     depends_on:
       - db
+      - redis
 
   user-service:
     build: ./services/user-service
@@ -32,6 +55,7 @@ services:
       - ./services/user-service/.env
     depends_on:
       - db
+      - redis
 
   company-service:
     build: ./services/company-service
@@ -41,6 +65,7 @@ services:
       - ./services/company-service/.env
     depends_on:
       - db
+      - redis
 
   job-service:
     build: ./services/job-service
@@ -50,6 +75,7 @@ services:
       - ./services/job-service/.env
     depends_on:
       - db
+      - redis
 
   application-service:
     build: ./services/application-service
@@ -59,6 +85,7 @@ services:
       - ./services/application-service/.env
     depends_on:
       - db
+      - redis
 
   notification-service:
     build: ./services/notification-service
@@ -68,6 +95,7 @@ services:
       - ./services/notification-service/.env
     depends_on:
       - db
+      - redis
 
   ai-service:
     build: ./services/ai-assistant-service
@@ -77,6 +105,7 @@ services:
       - ./services/ai-assistant-service/.env
     depends_on:
       - db
+      - redis
 
 volumes:
   pgdata:
