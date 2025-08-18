@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE 4005
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/server.js"]
