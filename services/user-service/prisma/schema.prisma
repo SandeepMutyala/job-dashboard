@@ -16,6 +16,7 @@ datasource db {
 model user_profile {
   id           Int       @id @default(autoincrement())
   user_id      Int       @unique
+  email        String?
   full_name    String?
   phone        String?
   location     String?
