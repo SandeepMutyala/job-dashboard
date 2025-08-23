@@ -1,4 +1,5 @@
 import prisma from '../prisma/client';
+import logger from './logger.service';
 
 export async function createProfile(
   user_id: number,
@@ -8,15 +9,27 @@ export async function createProfile(
   location: string,
   preferences: string,
 ) {
-  const profile = await prisma.user_profile.create({
-    data: {
-      user_id,
-      email,
-      full_name,
-      phone,
-      location,
-      preferences,
-    },
-  });
-  return profile;
+  try {
+    const profile = await prisma.user_profile.create({
+      data: {
+        user_id,
+        email,
+        full_name,
+        phone,
+        location,
+        preferences,
+      },
+    });
+
+    logger.info({
+      event: 'profile_created',
+      userId: user_id,
+      profileId: profile.id,
+      message: 'User profile created successfully',
+    });
+
+    return profile;
+  } catch (err) {
+    throw err;
+  }
 }
