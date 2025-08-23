@@ -107,5 +107,22 @@ services:
       - db
       - redis
 
+  promtail:
+    image: grafana/promtail:2.9.1 
+    container_name: promtail
+    restart: always
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/promtail.yml
+      - ./promtail-positions:/tmp
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/promtail.yml -config.expand-env=true
+    env_file:
+    - .env.dev
+    environment:
+      - LOKI_ENDPOINT=${LOKI_ENDPOINT}
+      - LOKI_USERNAME=${LOKI_USERNAME}
+      - LOKI_API_KEY=${LOKI_API_KEY}
+      - ENVIRONMENT=${ENVIRONMENT}
+
 volumes:
   pgdata:
