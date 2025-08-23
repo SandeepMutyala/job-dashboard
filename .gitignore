@@ -2,3 +2,9 @@
 .env.dev
 .env.prod
 services/*/.env
+
+# Promtail runtime
+promtail-positions/
+
+# OS / editor junk
+.DS_Store

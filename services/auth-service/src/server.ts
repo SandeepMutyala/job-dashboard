@@ -1,19 +1,29 @@
 import app from './index';
-import { initEmail } from './utils/email'; // import the init function
+import { initEmail } from './utils/email';
+import logger from './services/logger.service';
 
 const PORT = process.env.PORT || 4000;
 
 (async () => {
   try {
-    // Initialize email transporter first
     await initEmail();
 
-    // Start the Express server
     app.listen(PORT, () => {
-      console.log(`Auth service running on port ${PORT}`);
+      logger.info({
+        event: 'service_started',
+        message: `Auth service running on port ${PORT}`,
+        port: PORT,
+        service: process.env.SERVICE_NAME || 'auth-service',
+        env: process.env.NODE_ENV,
+      });
     });
   } catch (err) {
-    console.error('Failed to initialize email transporter', err);
+    logger.error({
+      event: 'service_startup_failed',
+      message: 'Failed to initialize email transporter',
+      error: (err as Error).message,
+      stack: (err as Error).stack,
+    });
     process.exit(1);
   }
 })();
