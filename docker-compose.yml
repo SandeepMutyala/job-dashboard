@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   frontend:
-    build: ./job-dashboard-client
+    build:
+      context: ./job-dashboard-client
+      dockerfile: Dockerfile
     container_name: job-dashboard-frontend
     ports:
       - "3000:80"  
@@ -11,6 +13,8 @@ services:
       - user-service
       - db
       - redis
+    environment:
+      - NODE_ENV=development
 
   db:
     image: postgres:15
