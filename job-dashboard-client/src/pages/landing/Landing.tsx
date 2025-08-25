@@ -1,17 +1,37 @@
+import React from 'react';
 import Header from '@/components/landing/Header';
 import Hero from '@/components/landing/Hero';
 import JobSeekersSection from '@/components/landing/JobSeeker';
 import EmployersSection from '@/components/landing/Employer';
+import styled from '@emotion/styled';
+
+const LandingContainer = styled.div`
+  height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+`;
+
+const SectionWrapper = styled.section`
+  scroll-snap-align: start;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
 
 export default function Landing() {
   return (
-    <div className="h-screen w-full overflow-y-scroll snap-y snap-mandatory">
-      <section className="snap-start h-screen">
+    <LandingContainer>
+      <SectionWrapper>
         <Header />
         <Hero />
-      </section>
-      <JobSeekersSection />
-      <EmployersSection />
-    </div>
+      </SectionWrapper>
+      <SectionWrapper>
+        <JobSeekersSection />
+      </SectionWrapper>
+      <SectionWrapper>
+        <EmployersSection />
+      </SectionWrapper>
+    </LandingContainer>
   );
 }

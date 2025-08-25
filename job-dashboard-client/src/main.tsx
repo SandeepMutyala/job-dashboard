@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import './index.css';
 import * as Sentry from '@sentry/react';
+import GlobalStyles from './styles/GlobalStyles';
 
 //Sentry initialization for frontend logs.
 Sentry.init({
@@ -15,6 +15,7 @@ Sentry.init({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
+      <GlobalStyles />
       <App />
     </BrowserRouter>
   </React.StrictMode>,
