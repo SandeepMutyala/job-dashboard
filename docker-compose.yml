@@ -50,6 +50,8 @@ services:
     depends_on:
       - db
       - redis
+    labels:
+      - "promtail=true"
 
   user-service:
     build: ./services/user-service
@@ -60,6 +62,8 @@ services:
     depends_on:
       - db
       - redis
+    labels:
+      - "promtail=true"
 
   company-service:
     build: ./services/company-service
@@ -70,6 +74,8 @@ services:
     depends_on:
       - db
       - redis
+    labels:
+      - "promtail=true"
 
   job-service:
     build: ./services/job-service
@@ -80,6 +86,8 @@ services:
     depends_on:
       - db
       - redis
+    labels:
+      - "promtail=true"
 
   application-service:
     build: ./services/application-service
@@ -90,6 +98,8 @@ services:
     depends_on:
       - db
       - redis
+    labels:
+      - "promtail=true"
 
   notification-service:
     build: ./services/notification-service
@@ -100,6 +110,8 @@ services:
     depends_on:
       - db
       - redis
+    labels:
+      - "promtail=true"
 
   ai-service:
     build: ./services/ai-assistant-service
@@ -110,6 +122,8 @@ services:
     depends_on:
       - db
       - redis
+    labels:
+      - "promtail=true"
 
   promtail:
     image: grafana/promtail:2.9.1 
