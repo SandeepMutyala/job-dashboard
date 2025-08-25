@@ -1,47 +1,132 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from '@emotion/styled';
+
+const Section = styled.section`
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0 clamp(1rem, 5vw, 5rem);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: stretch;
+  justify-content: center;
+
+  @media (min-width: 1145px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+`;
+
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  flex: 1;
+  gap: 1rem;
+
+  @media (min-width: 1024px) {
+    width: auto;
+    flex: 1;
+  }
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+
+  @media (min-width: 1024px) {
+    width: auto;
+    flex: 1;
+  }
+`;
+
+const Title = styled.h1`
+  font-size: clamp(1.5rem, 6vw, 4rem);
+  font-weight: bold;
+  color: #006fbf;
+  margin-bottom: 1rem;
+`;
+
+const Paragraph = styled.p`
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: #4b5563;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  margin-top: clamp(0.5rem, 2vw, 1rem);
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    width: auto;
+  }
+`;
+
+const PrimaryButton = styled.button`
+  background-color: #006fbf;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 1;
+
+  &:hover {
+    background-color: #005a9e;
+  }
+`;
+
+const SecondaryButton = styled(PrimaryButton)`
+  background-color: #e5e7eb;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+
+  &:hover {
+    background-color: #d1d5db;
+  }
+`;
+
+const HeroImage = styled.img`
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+`;
 
 export default function Hero() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between w-full h-full gap-4 md:gap-8 px-4 sm:px-6 md:px-20">
-      <div className="md:w-1/2 flex flex-col gap-4">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#006FBF]">
-          Welcome to SkillSynapse
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-gray-600">
-          “Connecting Talent with Opportunity” – simple and professional.
-        </p>
-        <p className="text-gray-500 sm:text-base md:text-lg">
+    <Section>
+      <ContentContainer>
+        <Title>Welcome to SkillSynapse</Title>
+        <Paragraph>“Connecting Talent with Opportunity” – simple and professional.</Paragraph>
+        <Paragraph>
           Browse thousands of job listings, apply in one click, and get discovered by top employers.
-        </p>
-        <p className="text-gray-500 sm:text-base md:text-lg">
+        </Paragraph>
+        <Paragraph>
           For recruiters, post jobs effortlessly and find the perfect candidate faster than ever.
-        </p>
-        <div className="flex gap-4 mt-4">
-          <button
-            onClick={() => navigate('/signup')}
-            className="bg-[#006FBF] text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-sm"
-          >
-            Join Now
-          </button>
-          <button
-            onClick={() => navigate('/login')}
-            className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition text-sm"
-          >
-            Log In
-          </button>
-        </div>
-      </div>
-
-      <div className="md:w-1/2 mt-4 md:mt-0 flex justify-center">
-        <img
-          src="/images/company.png"
-          alt="SkillSynapse"
-          className="w-full h-auto md:max-h-[70vh] object-cover rounded-xl shadow-lg"
-        />
-      </div>
-    </div>
+        </Paragraph>
+        <ButtonGroup>
+          <PrimaryButton onClick={() => navigate('/signup')}>Join Now</PrimaryButton>
+          <SecondaryButton onClick={() => navigate('/login')}>Log In</SecondaryButton>
+        </ButtonGroup>
+      </ContentContainer>
+      <ImageContainer>
+        <HeroImage src="/images/company.png" alt="SkillSynapse" />
+      </ImageContainer>
+    </Section>
   );
 }

@@ -1,31 +1,58 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from '@emotion/styled';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 5vw, 5rem);
+`;
+
+const Logo = styled.img`
+  height: clamp(3.5rem, 5vw, 6.5rem);
+  width: auto;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: clamp(0.5rem, 2vw, 1rem);
+`;
+
+const BaseButton = styled.button`
+  background-color: #006fbf;
+  color: white;
+  padding: clamp(0.4rem, 1vw, 0.6rem) clamp(0.8rem, 2vw, 1.2rem);
+  border-radius: clamp(0.4rem, 1vw, 0.5rem);
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+const PrimaryButton = styled(BaseButton)``;
+
+const SecondaryButton = styled(BaseButton)`
+  background-color: #e5e7eb;
+  color: #1f2937;
+
+  &:hover {
+    background-color: #d1d5db;
+  }
+`;
 
 export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between items-center px-4 sm:px-6 md:px-20 pt-4 md:pt-8 mb-6 md:mb-1">
-      <img
-        src="/images/logo-full.svg"
-        alt="SkillSynapse Logo"
-        className="h-14 md:h-24 lg:h-28 xl:h-32 w-auto max-h-32"
-      />
-      <div className="flex gap-3">
-        <button
-          onClick={() => navigate('/signup')}
-          style={{ backgroundColor: '#006FBF' }}
-          className="text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-md"
-        >
-          Join Now
-        </button>
-        <button
-          onClick={() => navigate('/login')}
-          className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition text-md"
-        >
-          Log In
-        </button>
-      </div>
-    </div>
+    <Container>
+      <Logo src="/images/logo-full.png" alt="SkillSynapse Logo" />
+      <ButtonGroup>
+        <PrimaryButton onClick={() => navigate('/signup')}>Join Now</PrimaryButton>
+        <SecondaryButton onClick={() => navigate('/login')}>Log In</SecondaryButton>
+      </ButtonGroup>
+    </Container>
   );
 }
